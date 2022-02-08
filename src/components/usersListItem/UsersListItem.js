@@ -9,7 +9,7 @@ const UsersListItem = ({login, type, avatar_url, onUserSelected}) => {
             <div>
                 <div>{login}</div>
                 <div>{type}</div>
-                <button onClick={onUserSelected}>Профиль</button>
+                <button className='user__button' onClick={onUserSelected}>Профиль</button>
             </div>
             
         </li>

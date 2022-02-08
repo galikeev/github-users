@@ -63,9 +63,9 @@ const UsersList = () => {
     return (
         <div className='user'>
             {elements}
-            <div>
-                <button onClick={() => dispatch(prevPage(currentPage - 9))}>prev</button>
-                <button onClick={() => dispatch(nextPage(currentPage + 9))}>next</button>
+            <div className='user__btns'>
+                <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 9))}>Назад</button>
+                <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 9))}>Далее</button>
             </div>
             {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers}/>}
         </div>
