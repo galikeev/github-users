@@ -1,6 +1,7 @@
 const initialState = {
     users: [],
-    userStatus: 'complete'
+    userStatus: 'complete',
+    selectedUsers: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 userStatus: 'error'
+            }
+        case 'USER_SELECTED':
+            return {
+                ...state,
+                selectedUsers: state.users.filter(elem => elem.id === action.payload)
             }
         default: return state
     }
