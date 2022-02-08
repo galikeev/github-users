@@ -2,7 +2,7 @@ import UsersList from '../usersList/UsersList';
 
 const App = () => {
 	return (
-		<div className="App">
+		<div className="app">
 			<UsersList/>
 		</div>
 	);

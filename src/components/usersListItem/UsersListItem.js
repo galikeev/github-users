@@ -1,10 +1,18 @@
-const UsersListItem = ({login, type, avatar_url}) => {
+import './usersListItem.scss';
+
+const UsersListItem = ({login, type, avatar_url, onUserSelected}) => {
     return (
-        <>
-            <div>{login}</div>
-            <div>{type}</div>
-            <img src={avatar_url} alt={login} />
-        </>
+        <li className='user__item'>
+            <div className='user__img'>
+                <img src={avatar_url} alt={login} />
+            </div>
+            <div>
+                <div>{login}</div>
+                <div>{type}</div>
+                <button onClick={onUserSelected}>Профиль</button>
+            </div>
+            
+        </li>
     )
 }
 

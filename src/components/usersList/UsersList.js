@@ -2,12 +2,15 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {usersFetching, usersFetched, usersFetchingError, userSelected} from '../../actions/index';
+import {usersFetching, usersFetched, usersFetchingError, followersFetching, followersFetched, followersFetcingError } from '../../actions/index';
 import UsersListItem from '../usersListItem/UsersListItem';
+import UserInfo from '../userInfo/UserInfo';
 import Spinner from '../spinner/Spinner';
 
+import './usersList.scss'; 
+
 const UsersList = () => {
-    const {users, userStatus} = useSelector(state => state);
+    const {users, userStatus, selectedUser, isShow, followers} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -25,19 +28,35 @@ const UsersList = () => {
         return <h5>ошибка</h5>
     }
 
+    const onUserSelected = (id) => {
+        dispatch({type: 'USER_SELECTED', payload: id})
+        dispatch(followersFetching());
+        const elems = users.find(elem => elem.id === id)
+        request(elems.followers_url)
+            .then(data => dispatch(followersFetched(data)))
+            .catch(() => dispatch(followersFetcingError()))
+    }
+
     const renderUsersList = (arr) => {
-        return arr.map(({id, ...props}) => {
+        const elems = arr.map(({id, ...props}) => {
             return (
-                <UsersListItem {...props} key={id}/>
+                <UsersListItem {...props} key={id} onUserSelected={() => onUserSelected(id)}/>
             )
         })
+
+        return (
+            <ul className='user__list'>
+                {elems}
+            </ul>
+        )
     }
 
     const elements = renderUsersList(users);
 
     return (
-        <div>
+        <div className='user'>
             {elements}
+            {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers}/>}
         </div>
     )
 }
