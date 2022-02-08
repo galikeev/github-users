@@ -1,7 +1,10 @@
 const initialState = {
     users: [],
     userStatus: 'complete',
-    selectedUsers: null
+    selectedUser: null,
+    isShow: false,
+    followers: [],
+    followersStatus: 'complete'
 }
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +28,24 @@ const reducer = (state = initialState, action) => {
         case 'USER_SELECTED':
             return {
                 ...state,
-                selectedUsers: state.users.filter(elem => elem.id === action.payload)
+                selectedUser: action.payload,
+                isShow: true
+            }
+        case 'FOLLOWERS_FETCHING':
+            return {
+                ...state,
+                followersStatus: 'loading'
+            }
+        case 'FOLLOWERS_FETCHED':
+            return {
+                ...state,
+                followers: action.payload,
+                followersStatus: 'complete'
+            }
+        case 'FOLLOWERS_FETCHING_ERROR':
+            return {
+                ...state,
+                followersStatus: 'error'
             }
         default: return state
     }
