@@ -17,9 +17,21 @@ export const usersFetchingError = () => {
     }
 }
 
-export const userSelected = (id) => {
+export const followersFetching = () => {
     return {
-        type: 'USERS_SELECTED',
-        payload: id
+        type: 'FOLLOWERS_FETCHING'
+    }
+}
+
+export const followersFetched = (followers) => {
+    return {
+        type: 'FOLLOWERS_FETCHED',
+        payload: followers
+    }
+}
+
+export const followersFetcingError = () => {
+    return {
+        type: 'FOLLOWERS_FETCHING_ERROR'
     }
 }
