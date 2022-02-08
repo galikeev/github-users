@@ -20,7 +20,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.payload,
-                userStatus: 'complete'
+                userStatus: 'complete',
+                isShow: false
             }
         case 'USERS_FETCHING_ERROR':
             return {
