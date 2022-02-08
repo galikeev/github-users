@@ -2,7 +2,14 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {usersFetching, usersFetched, usersFetchingError, followersFetching, followersFetched, followersFetcingError } from '../../actions/index';
+import {usersFetching, 
+        usersFetched, 
+        usersFetchingError, 
+        followersFetching, 
+        followersFetched, 
+        followersFetcingError, 
+        nextPage, 
+        prevPage } from '../../actions/index';
 import UsersListItem from '../usersListItem/UsersListItem';
 import UserInfo from '../userInfo/UserInfo';
 import Spinner from '../spinner/Spinner';
@@ -10,17 +17,17 @@ import Spinner from '../spinner/Spinner';
 import './usersList.scss'; 
 
 const UsersList = () => {
-    const {users, userStatus, selectedUser, isShow, followers} = useSelector(state => state);
+    const {users, userStatus, selectedUser, isShow, followers, currentPage, perPage} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     useEffect(() => {
         dispatch(usersFetching());
-        request('https://api.github.com/users')
+        request(`https://api.github.com/users?since=${currentPage}&per_page=${perPage}`)
             .then(data => dispatch(usersFetched(data)))
             .catch(() => dispatch(usersFetchingError()))
         // eslint-disable-next-line    
-    }, [])
+    }, [currentPage])
 
     if (userStatus === 'loading') {
         return <Spinner/>
@@ -56,6 +63,10 @@ const UsersList = () => {
     return (
         <div className='user'>
             {elements}
+            <div>
+                <button onClick={() => dispatch(prevPage(currentPage - 9))}>prev</button>
+                <button onClick={() => dispatch(nextPage(currentPage + 9))}>next</button>
+            </div>
             {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers}/>}
         </div>
     )
