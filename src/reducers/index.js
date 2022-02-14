@@ -6,7 +6,7 @@ const initialState = {
     perPage: 9,
     isShow: false,
     followers: []
-}
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -72,6 +72,6 @@ const reducer = (state = initialState, action) => {
             }
         default: return state
     }
-}
+};
 
 export default reducer;

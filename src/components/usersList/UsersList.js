@@ -1,8 +1,8 @@
-import {useHttp} from '../../hooks/http.hook';
+import { useHttp } from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {usersFetching, 
+import { usersFetching, 
         usersFetched, 
         usersFetchingError,
         oneUserFethcing,
@@ -30,19 +30,19 @@ const UsersList = () => {
             perPage
         } = useSelector(state => state);
     const dispatch = useDispatch();
-    const {request} = useHttp();
+    const { request } = useHttp();
 
     useEffect(() => {
         onLoadingUsers();
         // eslint-disable-next-line    
-    }, [currentPage])
+    }, [currentPage]);
 
     const onLoadingUsers = () => {
         dispatch(usersFetching());
         request(`https://api.github.com/users?since=${currentPage}&per_page=${perPage}`)
             .then(data => dispatch(usersFetched(data)))
             .catch(() => dispatch(usersFetchingError()))
-    }
+    };
 
     if (status === 'loading') {
         return <Spinner/>
@@ -61,14 +61,14 @@ const UsersList = () => {
                     .catch(() => dispatch(followersFetcingError()))
                 )
             .catch(() => dispatch(oneUserFethcingError()))
-    }
+    };
 
     const renderUsersList = (arr) => {
         const elems = arr.map(({id, ...props}) => {
             return (
                 <UsersListItem {...props} key={id} onUserSelected={() => onUserSelected(id)}/>
             )
-        })
+        });
 
         return (
             <>
@@ -80,8 +80,8 @@ const UsersList = () => {
                     <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 18))}>Далее</button>
                 </div>
             </>
-        )
-    }
+        );
+    };
 
     const elements = renderUsersList(users);
 
@@ -91,7 +91,7 @@ const UsersList = () => {
             
             {isShow && <UserInfo oneUser={oneUser} followers={followers} onLoadingUsers={onLoadingUsers}/>}
         </div>
-    )
-}
+    );
+};
 
 export default UsersList;

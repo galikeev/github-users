@@ -6,6 +6,6 @@ const App = () => {
 			<UsersList/>
 		</div>
 	);
-}
+};
 
 export default App;

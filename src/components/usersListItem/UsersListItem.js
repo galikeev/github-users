@@ -1,6 +1,6 @@
 import './usersListItem.scss';
 
-const UsersListItem = ({login, type, avatar_url, onUserSelected}) => {
+const UsersListItem = ({ login, type, avatar_url, onUserSelected }) => {
     return (
         <li className='user__item'>
             <div className='user__img'>
@@ -9,11 +9,13 @@ const UsersListItem = ({login, type, avatar_url, onUserSelected}) => {
             <div>
                 <div>{login}</div>
                 <div>{type}</div>
-                <button className='user__button' onClick={onUserSelected}>Профиль</button>
+                <button className='user__button' onClick={onUserSelected}>
+                    Профиль
+                </button>
             </div>
             
         </li>
-    )
-}
+    );
+};
 
 export default UsersListItem;

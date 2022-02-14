@@ -7,7 +7,7 @@ const Spinner = () => {
                 </animateTransform>
             </path>
         </svg>
-    )
-}
+    );
+};
 
 export default Spinner;
