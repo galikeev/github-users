@@ -22,12 +22,16 @@ const UsersList = () => {
     const {request} = useHttp();
 
     useEffect(() => {
+        onLoadingUsers();
+        // eslint-disable-next-line    
+    }, [currentPage])
+
+    const onLoadingUsers = () => {
         dispatch(usersFetching());
         request(`https://api.github.com/users?since=${currentPage}&per_page=${perPage}`)
             .then(data => dispatch(usersFetched(data)))
             .catch(() => dispatch(usersFetchingError()))
-        // eslint-disable-next-line    
-    }, [currentPage])
+    }
 
     if (userStatus === 'loading') {
         return <Spinner/>
@@ -52,9 +56,15 @@ const UsersList = () => {
         })
 
         return (
-            <ul className='user__list'>
-                {elems}
-            </ul>
+            <>
+                <ul className='user__list'>
+                    {elems}
+                </ul>
+                <div className='user__btns'>
+                    <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 9))}>Назад</button>
+                    <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 9))}>Далее</button>
+                </div>
+            </>
         )
     }
 
@@ -62,12 +72,9 @@ const UsersList = () => {
 
     return (
         <div className='user'>
-            {elements}
-            <div className='user__btns'>
-                <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 9))}>Назад</button>
-                <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 9))}>Далее</button>
-            </div>
-            {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers}/>}
+            {!isShow && elements}
+            
+            {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers} onLoadingUsers={onLoadingUsers}/>}
         </div>
     )
 }
