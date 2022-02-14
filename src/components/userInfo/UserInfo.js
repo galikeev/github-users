@@ -16,20 +16,26 @@ const UserInfo = ({ oneUser, followers, onLoadingUsers }) => {
 
     return (
         <div className='info'>
-            <div className='info__name'>{login}</div>
-            <div className='info__name'>{name}</div>
-            <div className='info__img'>
-                <img src={avatar_url} alt={login} />
+            <div className='info__login'>{login}</div>
+            <div className="info__wrapper">
+                <div>
+                    <div className='info__name'>{name}</div>
+                    <div className='info__img'>
+                        <img src={avatar_url} alt={login} />
+                    </div>
+                    <div>{location}</div>
+                    <a className='info__link' href={html_url}>
+                        GitHub
+                    </a>
+                </div>
+                <div>
+                    <div>Подписчики</div>
+                    <div className='followers'>{follow}</div>
+                    <button className='user__button user__button_big' onClick={onLoadingUsers}>
+                        Назад к списку
+                    </button>
+                </div>
             </div>
-            <div>{location}</div>
-            <a href={html_url}>
-                GitHub
-            </a>
-            <div>Подписчики</div>
-            <div className='followers'>{follow}</div>
-            <button className='user__button user__button_big' onClick={onLoadingUsers}>
-                Назад к списку
-            </button>
         </div>
     );
 };
