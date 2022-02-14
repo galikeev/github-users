@@ -17,6 +17,25 @@ export const usersFetchingError = () => {
     }
 }
 
+export const oneUserFethcing = () => {
+    return {
+        type: 'ONE_USER_FETCHING'
+    }
+}
+
+export const oneUserFetched = (user) => {
+    return {
+        type: 'ONE_USER_FETCHED',
+        payload: user
+    }
+}
+
+export const oneUserFethcingError = () => {
+    return {
+        type: 'ONE_USER_FETCHING_ERROR'
+    }
+}
+
 export const followersFetching = () => {
     return {
         type: 'FOLLOWERS_FETCHING'

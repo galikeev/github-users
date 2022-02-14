@@ -1,12 +1,11 @@
 const initialState = {
     users: [],
-    userStatus: 'complete',
-    selectedUser: null,
-    currentPage: 100,
+    status: 'complete',
+    oneUser: {},
+    currentPage: 0,
     perPage: 9,
     isShow: false,
-    followers: [],
-    followersStatus: 'complete'
+    followers: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -14,41 +13,52 @@ const reducer = (state = initialState, action) => {
         case 'USERS_FETCHING':
             return {
                 ...state,
-                userStatus: 'loading'
+                status: 'loading'
             }
         case 'USERS_FETCHED':
             return {
                 ...state,
                 users: action.payload,
-                userStatus: 'complete',
+                status: 'complete',
                 isShow: false
             }
         case 'USERS_FETCHING_ERROR':
             return {
                 ...state,
-                userStatus: 'error'
+                status: 'error'
             }
-        case 'USER_SELECTED':
+        case 'ONE_USER_FETCHING':
             return {
                 ...state,
-                selectedUser: action.payload,
+                status: 'loading'
+            }
+        case 'ONE_USER_FETCHED':
+            return {
+                ...state,
+                oneUser: action.payload,
+                status: 'complete',
                 isShow: true
+            }
+        case 'ONE_USER_FETCHING_ERROR':
+            return {
+                ...state,
+                status: 'error'
             }
         case 'FOLLOWERS_FETCHING':
             return {
                 ...state,
-                followersStatus: 'loading'
+                status: 'loading'
             }
         case 'FOLLOWERS_FETCHED':
             return {
                 ...state,
                 followers: action.payload,
-                followersStatus: 'complete'
+                status: 'complete'
             }
         case 'FOLLOWERS_FETCHING_ERROR':
             return {
                 ...state,
-                followersStatus: 'error'
+                status: 'error'
             }
         case 'NEXT_PAGE':
             return {
@@ -58,7 +68,7 @@ const reducer = (state = initialState, action) => {
         case 'PREV_PAGE':
             return {
                 ...state,
-                currentPage: action.payload < 100 ? 100 : action.payload
+                currentPage: action.payload < 0 ? 0 : action.payload
             }
         default: return state
     }

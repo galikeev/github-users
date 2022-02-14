@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {usersFetching, 
         usersFetched, 
-        usersFetchingError, 
+        usersFetchingError,
+        oneUserFethcing,
+        oneUserFetched,
+        oneUserFethcingError,
         followersFetching, 
         followersFetched, 
         followersFetcingError, 
@@ -17,7 +20,15 @@ import Spinner from '../spinner/Spinner';
 import './usersList.scss'; 
 
 const UsersList = () => {
-    const {users, userStatus, selectedUser, isShow, followers, currentPage, perPage} = useSelector(state => state);
+    const {
+            users, 
+            status, 
+            oneUser, 
+            isShow, 
+            followers, 
+            currentPage, 
+            perPage
+        } = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -33,19 +44,23 @@ const UsersList = () => {
             .catch(() => dispatch(usersFetchingError()))
     }
 
-    if (userStatus === 'loading') {
+    if (status === 'loading') {
         return <Spinner/>
-    } else if (userStatus === 'error') {
+    } else if (status === 'error') {
         return <h5>ошибка</h5>
     }
 
     const onUserSelected = (id) => {
-        dispatch({type: 'USER_SELECTED', payload: id})
+        dispatch(oneUserFethcing());
         dispatch(followersFetching());
-        const elems = users.find(elem => elem.id === id)
-        request(elems.followers_url)
-            .then(data => dispatch(followersFetched(data)))
-            .catch(() => dispatch(followersFetcingError()))
+        const elem = users.find(elem => elem.id === id)
+        request(`https://api.github.com/users/${elem.login}`)
+            .then(data => dispatch(oneUserFetched(data)))
+            .then(request(elem.followers_url)
+                    .then(data => dispatch(followersFetched(data)))
+                    .catch(() => dispatch(followersFetcingError()))
+                )
+            .catch(() => dispatch(oneUserFethcingError()))
     }
 
     const renderUsersList = (arr) => {
@@ -61,8 +76,8 @@ const UsersList = () => {
                     {elems}
                 </ul>
                 <div className='user__btns'>
-                    <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 9))}>Назад</button>
-                    <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 9))}>Далее</button>
+                    <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 18))}>Назад</button>
+                    <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 18))}>Далее</button>
                 </div>
             </>
         )
@@ -74,7 +89,7 @@ const UsersList = () => {
         <div className='user'>
             {!isShow && elements}
             
-            {isShow && <UserInfo userId={selectedUser} usersList={users} followers={followers} onLoadingUsers={onLoadingUsers}/>}
+            {isShow && <UserInfo oneUser={oneUser} followers={followers} onLoadingUsers={onLoadingUsers}/>}
         </div>
     )
 }
