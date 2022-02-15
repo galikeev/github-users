@@ -4,7 +4,9 @@ https://app-github-users.herokuapp.com/
 
 ## Screenshot
 
-[![2022-02-09-11-21-14.png](https://i.postimg.cc/C5C0K1Q6/2022-02-09-11-21-14.png)](https://postimg.cc/jnjmgsKz)
+[![2022-02-15-12-11-39.png](https://i.postimg.cc/3N18MWn5/2022-02-15-12-11-39.png)](https://postimg.cc/wRt8LqC0)
+
+[![2022-02-15-12-11-46.png](https://i.postimg.cc/d1mvdLMk/2022-02-15-12-11-46.png)](https://postimg.cc/9RMvHXQC)
 
 ## Technologies
 
