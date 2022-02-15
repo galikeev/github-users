@@ -25,8 +25,8 @@ const UsersList = () => {
             status, 
             oneUser, 
             isShow, 
-            followers, 
-            currentPage, 
+            followers,
+            since,
             perPage
         } = useSelector(state => state);
     const dispatch = useDispatch();
@@ -35,11 +35,11 @@ const UsersList = () => {
     useEffect(() => {
         onLoadingUsers();
         // eslint-disable-next-line    
-    }, [currentPage]);
+    }, [since]);
 
     const onLoadingUsers = () => {
         dispatch(usersFetching());
-        request(`https://api.github.com/users?since=${currentPage}&per_page=${perPage}`)
+        request(`https://api.github.com/users?since=${since}&per_page=${perPage}`)
             .then(data => dispatch(usersFetched(data)))
             .catch(() => dispatch(usersFetchingError()))
     };
@@ -76,8 +76,8 @@ const UsersList = () => {
                     {elems}
                 </ul>
                 <div className='user__btns'>
-                    <button className='user__button' onClick={() => dispatch(prevPage(currentPage - 18))}>Назад</button>
-                    <button className='user__button' onClick={() => dispatch(nextPage(currentPage + 18))}>Далее</button>
+                    <button className='user__button' onClick={() => dispatch(prevPage(0))}>Назад</button>
+                    <button className='user__button' onClick={() => dispatch(nextPage(users[8].id))}>Далее</button>
                 </div>
             </>
         );

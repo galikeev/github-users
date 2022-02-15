@@ -2,7 +2,7 @@ const initialState = {
     users: [],
     status: 'complete',
     oneUser: {},
-    currentPage: 0,
+    since: 0,
     perPage: 9,
     isShow: false,
     followers: []
@@ -63,12 +63,12 @@ const reducer = (state = initialState, action) => {
         case 'NEXT_PAGE':
             return {
                 ...state,
-                currentPage: action.payload
+                since: action.payload
             }
         case 'PREV_PAGE':
             return {
                 ...state,
-                currentPage: action.payload < 0 ? 0 : action.payload
+                since: action.payload < 0 ? 0 : action.payload
             }
         default: return state
     }
